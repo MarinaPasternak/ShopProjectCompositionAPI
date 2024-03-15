@@ -62,11 +62,15 @@ const redirectToCheckOut = () => {
 
 .price {
     margin-top: 0.3rem;
+    font-size: 12px;
 }
 
 .title {
     font-weight: 600;
     color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
 }
 
 .complate-box {
@@ -74,7 +78,13 @@ const redirectToCheckOut = () => {
    justify-content: center;
    align-items: center; 
    padding: 1rem 0;
-   color: #2c3e50;
+   color: #192430;
    border-bottom: none;
+   font-size: 14px;
+   border-radius: 0 0 15px 15px;
+}
+
+.complate-box:hover, .complate-box:focus{
+    background-color: #80b6eca5;
 }
 </style>

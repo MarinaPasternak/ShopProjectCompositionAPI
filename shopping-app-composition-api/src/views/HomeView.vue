@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import ShopContext from '@/components/ShopContext.vue';
+import ProductCard from '@/components/ProductCard.vue';
 
 const isShopContextVisible = ref(false);
 
@@ -31,11 +32,7 @@ const openShopContext = () => {
     </div>
   </div>
   <div class="bottom-flex-block">
-    <div>r</div>
-    <div>r</div>
-    <div>r</div>
-    <div>r</div>
-    <div>r</div>
+   <ProductCard></ProductCard>
   </div>
 </template>
 
@@ -46,11 +43,12 @@ const openShopContext = () => {
   align-items: center;
   gap: 25px;
   flex-wrap: wrap;
+  margin-bottom: 3rem;
 }
 
 .top-flex-block {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 25px;
   justify-content: space-between;
   width: 100%;
