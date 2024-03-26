@@ -1,8 +1,11 @@
 <script setup>
-import { defineEmits } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 
 const emits = defineEmits(['onRedirectToCheckOut']);
+const props = defineProps(['products']);
 
+const allCardProducts = ref(props.products);
+console.log(allCardProducts);
 const redirectToCheckOut = () => {
     emits('onRedirectToCheckOut');
 };
@@ -10,13 +13,13 @@ const redirectToCheckOut = () => {
 
 <template>
     <div class="context-wrapper">
-        <div class="context-item">
+        <div v-for="product in allCardProducts" :key="product.id" class="context-item">
             <div class="image">
-                <img src="" alt="">
+                <img :src="product.image ? product.image : 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'" :alt="product.title">
             </div>
             <div class="content">
-                <div class="title">Title</div>
-                <div class="price">10$</div>
+                <div class="title">{{ product.title }}</div>
+                <div class="price">${{ product.price }}</div>
             </div>
         </div>
         <div @click="redirectToCheckOut" class="context-item complate-box">Complate The Shopping</div>
@@ -34,18 +37,19 @@ const redirectToCheckOut = () => {
     padding-top: 1.5rem;
     border-radius: 15px;
     max-width: 600px;
-    min-width: 250px;
+    min-width: 350px;
     filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));  
 }
 
 .context-item {
-     display: flex;  
-     padding: 0 2rem 0 2rem;
-     border-bottom: 3px solid rgba(204, 202, 202, 0.785); 
+    display: flex;
+    padding: 0 1rem 0 1rem;
+    border-bottom: 3px solid rgba(204, 202, 202, 0.785);
 }
 
 .image {
     margin-right: 1rem;
+    margin-top: 1rem;
 }
 
 .image img {
@@ -56,12 +60,14 @@ const redirectToCheckOut = () => {
 
 .content {
     font-weight: 500;
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
 }
 
 .price {
     margin-top: 0.3rem;
+    margin-bottom: 1rem;
     font-size: 12px;
 }
 
