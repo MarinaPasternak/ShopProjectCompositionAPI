@@ -1,6 +1,8 @@
 <script setup>
+import { useRouter } from 'vue-router';
 import { defineProps, ref } from 'vue';
 const props = defineProps(['product']);
+const router = useRouter();
 
 const productData = ref(props.product);
 </script>
@@ -14,7 +16,7 @@ const productData = ref(props.product);
             <img :src="productData.image ? productData.image : 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'" :alt="productData.title">
         </div>
         <div class="desc">
-            <div class="button">DETAIL</div>
+            <div class="button" @click="router.push(`/product-detail/${productData.id}`)">DETAIL</div>
             <span class="title">{{ productData.title }}</span>
             <div class="price">${{ productData.price }}</div>
         </div>
