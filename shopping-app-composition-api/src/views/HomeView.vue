@@ -32,13 +32,27 @@ const fetchAllProducts = async () => {
   }
 };
 
+const fetchProductsByCategory = async () => {
+  try {
+    const response  = await fetch(`https://fakestoreapi.com/products/category/${activeCategory.value}`);
+    const jsonData = await response.json();
+    products.value = jsonData;
+  } catch(error) {
+    console.log(error);
+  }
+};
+
 onMounted(() => {
   fetchAllCategories();
   fetchAllProducts();
 });
 
-watch(activeCategory, (newActiveCategory, oldActiveCategory) => {
-  
+watch(activeCategory, (newActiveCategory) => {
+  if (!newActiveCategory) {
+    fetchAllProducts();
+  } else {
+    fetchProductsByCategory();
+  }
 });
 </script>
 
