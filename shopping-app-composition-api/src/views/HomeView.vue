@@ -1,24 +1,58 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import ShopContext from '@/components/ShopContext.vue';
 import ProductCard from '@/components/ProductCard.vue';
 
 const isShopContextVisible = ref(false);
+const categories = ref([]);
+const products = ref([]);
+const activeCategory = ref(null);
 
 const openShopContext = () => {
   isShopContextVisible.value = !isShopContextVisible.value;
 };
+
+const fetchAllCategories = async () => {
+  try {
+    const response  = await fetch('https://fakestoreapi.com/products/categories');
+    const jsonData = await response.json();
+    categories.value = jsonData;
+  } catch(error) {
+    console.log(error);
+  }
+};
+
+const fetchAllProducts = async () => {
+  try {
+    const response  = await fetch('https://fakestoreapi.com/products');
+    const jsonData = await response.json();
+    products.value = jsonData;
+  } catch(error) {
+    console.log(error);
+  }
+};
+
+onMounted(() => {
+  fetchAllCategories();
+  fetchAllProducts();
+});
+
+watch(activeCategory, (newActiveCategory, oldActiveCategory) => {
+  
+});
 </script>
 
 <template>
   <div class="filter-wrapper">
     <div class="top-flex-block">
-      <div class="category-block">
-        <div>r</div>
-        <div>r</div>
-        <div>r</div>
-        <div>r</div>
-        <div>r</div>
+      <div class="categories-block">
+        <div 
+          :class = "activeCategory === item ? 'active-category': ''"
+          @click="activeCategory = activeCategory === item ? '': item" 
+          v-for="item in categories" :key="item" 
+          class="category-block">
+            {{ item }}
+        </div>
       </div>
       <div class="box">
         <div class="cart-icon-container" @click="openShopContext">
@@ -32,7 +66,7 @@ const openShopContext = () => {
     </div>
   </div>
   <div class="bottom-flex-block">
-   <ProductCard></ProductCard>
+   <ProductCard v-for="item in products" :product="item" :key="item.title" ></ProductCard>
   </div>
 </template>
 
@@ -51,6 +85,13 @@ const openShopContext = () => {
   align-items: start;
   gap: 25px;
   justify-content: space-between;
+  width: 100%;
+}
+
+.categories-block {
+  display: flex;
+  align-items: start;
+  gap: 25px;
   width: 100%;
 }
 
@@ -96,5 +137,13 @@ const openShopContext = () => {
 .items-in-cart-block p {
   margin: 0;
   padding: 3px;
+}
+
+.bottom-flex-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
 }
 </style>
